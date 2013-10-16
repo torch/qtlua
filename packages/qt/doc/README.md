@@ -40,11 +40,11 @@ environment including a graphical console.
 <a name="qlua.usage"/>
 ## Usage ##
 
-Program `qlua` accepts the same command line options and arguments
-as the stand-alone Lua interpreter [lua](..:LuaManual#LuaStandalone).
-It also accepts all the
-[[http://doc.trolltech.com/4.4/qapplication.html#QApplication|Qt
-command line options]] as well as a few specific options.
+Program `qlua` accepts the same command line options and arguments as the
+stand-alone Lua interpreter [lua](..:LuaManual#LuaStandalone).  It also
+accepts all the
+[Qt command line options](http://doc.trolltech.com/4.4/qapplication.html#QApplication)
+as well as a few specific options.
 
 ```
 Usage: qlua [options] [script <scriptargs>]
@@ -177,7 +177,7 @@ or is currently allocated.
 
 Function `qtdata:type()` returns a string naming the type of the
 value contained in the Qt variant.  In the case of object pointers,
-this function returns a string of the form ''"ClassName*"'' where
+this function returns a string of the form `"ClassName*"` where
 `ClassName` represents the object class.  If the object has been
 deleted, this function returns `nil`.
 
@@ -195,12 +195,12 @@ inherits the qt object class named `typename`.
 ## Qt Objects ##
 
 Critical Qt classes are subclasses of class
-[QObject](http://doc.trolltech.com/4.4/qobject.html).  Qt
-distinguishes some member functions of these classes, namely slots,
-signals and properties. Qt provides means to enumerate these slots,
-signals and properties at run time.  Please refer to the Qt
-documentation on the [[http://doc.trolltech.com/4.4/object.html|Qt
-object model]] for more details.
+[QObject](http://doc.trolltech.com/4.4/qobject.html).  Qt distinguishes
+some member functions of these classes, namely slots, signals and
+properties. Qt provides means to enumerate these slots, signals and
+properties at run time.  Please refer to the Qt documentation on the
+[Qt object model](http://doc.trolltech.com/4.4/object.html) for more
+details.
 
 Instances of these classes are known as Qt objects.  Pointers to Qt
 objects can be exposed to the Lua interpeter because Qt variants can
@@ -795,14 +795,14 @@ in the thread owning the Lua engine object.
 
 Class [QtLuaLocker](#qt.QtLuaLocker) provides means
 to directly access the Lua state 
-[''lua_State*''](..:LuaManual#luaState) using 
+[`lua_State*`](..:LuaManual#luaState) using 
 the Lua API.
 
 
 <a name="qt.qtluaengine.constructor"/>
 ### Constructor ###
 
-''QtLuaEngine::QtLuaEngine(QObject *parent = 0)''
+`QtLuaEngine::QtLuaEngine(QObject *parent = 0)`
 
 This is the constructor for class `QtLuaEngine`.  Argument
 `parent` is the optional parent object.
@@ -969,9 +969,9 @@ does nothing and returns false.
 
 ### Miscellaneous ###
 
-''void QtLuaEngine::nameObject(QObject *obj, QString name = QString())''
+`void QtLuaEngine::nameObject(QObject *obj, QString name = QString())`
 
-''QObject* QtLuaEngine::namedObject(QString name)''
+`QObject* QtLuaEngine::namedObject(QString name)`
 
 `QList<QObjectPointer> QtLuaEngine::allNamedObjects()`
 
@@ -988,7 +988,7 @@ it after calling `nameObject`.
 
 
 
-''void QtLuaEngine::registerMetaObject(const QMetaObject *mo)''
+`void QtLuaEngine::registerMetaObject(const QMetaObject *mo)`
 
 This function declare the Qt class identified by the metaclass `mo`
 to the QtLua system.  This usually happens automatically when
@@ -1003,34 +1003,34 @@ properly recognized as an object class.
 ## Class QtLuaLocker ##
 
 Class [QtLuaLocker](#qt.QtLuaLocker) provides means
-to directly access the Lua state ''lua_State*'' using the Lua API.
+to directly access the Lua state `lua_State*` using the Lua API.
 This class ensures that the current thread has exclusive
 access to the Lua state.
 
-''QtLuaLocker::QtLuaLocker(QtLuaEngine *engine)''
+`QtLuaLocker::QtLuaLocker(QtLuaEngine *engine)`
 
 Create a `QtLuaLocker` object and ensures that the 
 current thread has exclusive access to the Lua state
 for the Lua interpreter `engine`.
 This constructor hangs until obtaining the lock
 
-''QtLuaLocker::QtLuaLocker(QtLuaEngine *engine, int timeOut)''
+`QtLuaLocker::QtLuaLocker(QtLuaEngine *engine, int timeOut)`
 
 Create a `QtLuaLocker` object and ensures that the 
 current thread has exclusive access to the Lua state
 for the Lua interpreter `engine`.
 This constructor hangs at most for `timeOut` milliseconds.
 To know whether the lock was acquired, 
-cast the `QtLuaLocker` as a ''lua_State*'' pointer.
+cast the `QtLuaLocker` as a `lua_State*` pointer.
 
 
-''lua_State* QtLuaLocker::operator lua_State*()''
+`lua_State* QtLuaLocker::operator lua_State*()`
 
-Returns a [''lua_State*''](..:LuaManual#luaState) 
+Returns a [`lua_State*`](..:LuaManual#luaState) 
 pointer to access the state
 of the Lua interpreter using the Lua API.
 Since this is a cast operator, one can simply pass 
-the `QtLuaLocker` object whenever a ''lua_State*'' is expected.
+the `QtLuaLocker` object whenever a `lua_State*` is expected.
 This cast returns `0` when the constructor was unable
 to acquire the exclusive lock during the specified timeout.
 
@@ -1080,7 +1080,7 @@ functions are accessible in both C and C++.
 <a name="luaqluaopen_qt"/>
 ### luaopen_qt ###
 
-''int luaopen_qt(lua_State *L)''
+`int luaopen_qt(lua_State *L)`
 
 Load the `qt` package into the interpreter.
 This is the function preloaded into `package.preload['qt']`.
@@ -1089,7 +1089,7 @@ This is the function preloaded into `package.preload['qt']`.
 <a name="luaqcall"/>
 ### luaQ_call ###
 
-''void luaQ_call(lua_State *L, int na, int nr, QObject *obj = 0)''
+`void luaQ_call(lua_State *L, int na, int nr, QObject *obj = 0)`
 
 Perform a Lua function call like [lua_call](..:LuaManual#luacall) 
 but ensure that the function is executed in the thread owning object `obj`
@@ -1105,7 +1105,7 @@ This is similar to calling
 <a name="luaqcheckqobject"/>
 ### luaQ_checkqobject&lt;TYPE&gt; ###
 
-''TYPE* luaQ_checkqobject&lt;TYPE&gt;(lua_State *L, int index)''
+`TYPE* luaQ_checkqobject&lt;TYPE&gt;(lua_State *L, int index)`
 
 This function causes an error if the Lua value at position `index`
 in the stack does not represent a [Qt object](#QObjects) of class `TYPE`.
@@ -1114,7 +1114,7 @@ Otherwise it returns a pointer to the object.
 <a name="luaqcheckqvariant"/>
 ### luaQ_checkqvariant&lt;TYPE&gt; ###
 
-''TYPE luaQ_checkqvariant&lt;TYPE&gt;(lua_State *L, int index)''
+`TYPE luaQ_checkqvariant&lt;TYPE&gt;(lua_State *L, int index)`
 
 This function causes an error if the Lua value at position `index`
 in the stack cannot be converted to 
@@ -1128,7 +1128,7 @@ This can always be achieved using the macro
 <a name="luaqcomplete"/>
 ### luaQ_complete ###
 
-''int luaQ_complete(lua_State *L)''
+`int luaQ_complete(lua_State *L)`
 
 This function first pops a string from the top of the stack.
 The string could contain a symbol or several symbols separated with dots of periods.
@@ -1137,7 +1137,7 @@ completions for the last symbol in the string.
 
 <a name="luaqconnnect"/>
 ### luaQ_connect ###
-''bool luaQ_connect(lua_State*L, QObject*o, const char *s, int fi)''
+`bool luaQ_connect(lua_State*L, QObject*o, const char *s, int fi)`
 
 Connects the signal with signature `s` from the Qt object `o`
 to the function at position `fi` in the stack.
@@ -1150,7 +1150,7 @@ See also [qt.connect(...)](#qt.connect)
 <a name="luaqdisconnect"/>
 ### luaQ_disconnect ###
 
-''bool luaQ_disconnect(lua_State*L, QObject*o, const char *s, int fi)''
+`bool luaQ_disconnect(lua_State*L, QObject*o, const char *s, int fi)`
 
 Disconnects the signal with signature `s` of Qt object `o`
 from the function located at index `fi` in the stack.
@@ -1164,7 +1164,7 @@ See also [qt.disconnect(...)](#qt.disconnect).
 <a name="luaqdoevents"/>
 ### luaQ_doevents ###
 
-''void luaQ_doevents(lua_State *L, bool wait = false)''
+`void luaQ_doevents(lua_State *L, bool wait = false)`
 
 Processe all pending events 
 and execute the functions associated with all queued signals.
@@ -1176,14 +1176,14 @@ See also [qt.doevents()](#qt.doevents).
 <a name="luaqengine"/>
 ### luaQ_engine ###
 
-''QtLuaEngine *luaQ_engine(lua_State *L)''
+`QtLuaEngine *luaQ_engine(lua_State *L)`
 
 Returns a pointer to the current [Lua engine](#qt.QtLuaEngine).
 
 <a name="luaqgetfield"/>
 ### luaQ_getfield ###
 
-''void luaQ_getfield(lua_State *L, int index, const char *name)''
+`void luaQ_getfield(lua_State *L, int index, const char *name)`
 
 This function is similar to [lua_getfield](..:LuaManual#luagetfield)
 but never propagates errors causes by executing the metatable
@@ -1194,7 +1194,7 @@ simply returns `nil`.
 <a name="luaqoptqobject"/>
 ### luaQ_optqobject&lt;TYPE&gt; ###
 
-''TYPE* luaQ_optqobject&lt;TYPE&gt;(lua_State *L, int index, TYPE *d)''
+`TYPE* luaQ_optqobject&lt;TYPE&gt;(lua_State *L, int index, TYPE *d)`
 
 Returns the optional [Qt object](#QObjects) of type `TYPE`
 found at position `index` in the stack.  If the position
@@ -1208,7 +1208,7 @@ See also [luaQ_checkqobject](#luaqcheckqobject)
 <a name="luaqoptqvariant"/>
 ### luaQ_optqvariant&lt;TYPE&gt; ###
 
-''TYPE luaQ_optqvariant&lt;TYPE&gt;(lua_State *L, int index, TYPE d = TYPE())''
+`TYPE luaQ_optqvariant&lt;TYPE&gt;(lua_State *L, int index, TYPE d = TYPE())`
 
 Returns the optional [Qt variant](#Qt.Qvariants) of actual type `TYPE`
 found at position `index` in the stack.  If the position
@@ -1222,7 +1222,7 @@ See also [luaQ_checkqvariant](#luaqcheckqvariant)
 <a name="luaqpause"/>
 ### luaQ_pause ###
 
-''void luaQ_pause(lua_State *L)''
+`void luaQ_pause(lua_State *L)`
 
 Causes the interpreter to enter the mode `Paused`. 
 When the interpreter pauses with this function, 
@@ -1234,9 +1234,9 @@ whenever the signal occurs.
 <a name="luaqpcall"/>
 ### luaQ_pcall ###
 
-''int luaQ_pcall(lua_State *L, int na, int nr, int eh, QObject *obj = 0)''
+`int luaQ_pcall(lua_State *L, int na, int nr, int eh, QObject *obj = 0)`
 
-''int luaQ_pcall(lua_State *L, int na, int nr, int eh, int oh)''
+`int luaQ_pcall(lua_State *L, int na, int nr, int eh, int oh)`
 
 Performs a Lua function call like 
 [lua_pcall](..:LuaManual#luapcall) but ensures that
@@ -1253,7 +1253,7 @@ operations in the QtLua interface.
 <a name="luaqprint"/>
 ### luaQ_print ###
 
-''int luaQ_print(lua_State *L, int nr)''
+`int luaQ_print(lua_State *L, int nr)`
 
 Prints the `nr` top elements of the stack without
 changing the stack in any respect.
@@ -1262,7 +1262,7 @@ changing the stack in any respect.
 <a name="luaqpushmeta"/>
 ### luaQ_pushmeta ###
 
-''void luaQ_pushmeta(lua_State *L, int type)''
+`void luaQ_pushmeta(lua_State *L, int type)`
 
 Pushes the metatable associated with Qt variants of type `type`.
 
@@ -1276,9 +1276,9 @@ a metatable for type `TYPE`:
  luaQ_pushmeta(L, qMetaTypeId&lt;TYPE&gt;());
 ```
 
-''void luaQ_pushmeta(lua_State *L, const QMetaObject *mo)''
+`void luaQ_pushmeta(lua_State *L, const QMetaObject *mo)`
 
-''void luaQ_pushmeta(lua_State *L, const QObject *o)''
+`void luaQ_pushmeta(lua_State *L, const QObject *o)`
 
 Pushes the metatable associated with Qt object `o` or
 with Qt objects whose class is represented by the 
@@ -1295,18 +1295,18 @@ a metatable for a Qt object class `TYPE`:
 <a name="luaqpushqt"/>
 ### luaQ_pushqt ###
 
-''void luaQ_pushqt(lua_State *L)''
+`void luaQ_pushqt(lua_State *L)`
 
 Pushes the table corresponding to the package `qt`.
 
-''void luaQ_pushqt(lua_State *L, const QVariant &var)''
+`void luaQ_pushqt(lua_State *L, const QVariant &var)`
 
 Pushes a representation of the 
 [Qt variant](#qt.QVariants) `var` onto the Lua stack.
 Numeric types are automatically converted to Lua numbers. 
 String types are automatically converted to Lua strings.
 
-''void luaQ_pushqt(lua_State *L, QObject *obj, bool owned=false)''
+`void luaQ_pushqt(lua_State *L, QObject *obj, bool owned=false)`
 
 Pushes a representation of the 
 [Qt object](#qt.QObjects) `obj` onto the Lua stack.
@@ -1321,7 +1321,7 @@ immediately after creating the C++ object.
 <a name="luaqregister"/>
 ### luaQ_register ###
 
-''void luaQ_register(lua_State *L, const luaL_Reg *l, QObject *obj)''
+`void luaQ_register(lua_State *L, const luaL_Reg *l, QObject *obj)`
 
 Registers C or C++ functins that must run in the thread of Qt object `obj`.
 This function is similar to [luaL_register](..:LuaManual#luaLregister).
@@ -1340,7 +1340,7 @@ which is assumed to be a Qt object.
 <a name="luaqtoqobject"/>
 ### luaQ_toqobject ###
 
-''QObject* luaQ_toqobject(lua_State *L, int i, const QMetaObject *m = 0)''
+`QObject* luaQ_toqobject(lua_State *L, int i, const QMetaObject *m = 0)`
 
 Returns a pointer to the [Qt object](#QObjects)
 located at position `i` on the stack.
@@ -1353,7 +1353,7 @@ When `m` is null, all Qt objects are accepted.
 <a name="luaqtoqvariant"/>
 ### luaQ_toqvariant ###
 
-''QVariant luaQ_toqvariant(lua_State *L, int i, int type = 0)''
+`QVariant luaQ_toqvariant(lua_State *L, int i, int type = 0)`
 
 Converts the Lua value at position `i` of
 the stack into a [Qt variant](#Qt.Qvariants) of type `type`.
@@ -1365,9 +1365,9 @@ returns a Qt variant of type `QVariant::Invalid`.
 <a name="luaqtraceback"/>
 ### luaQ_traceback ###
 
-''int luaQ_traceback(lua_State *L)''
+`int luaQ_traceback(lua_State *L)`
 
-''int luaQ_tracebackskip(lua_State *L, int skip)''
+`int luaQ_tracebackskip(lua_State *L, int skip)`
 
 Augments the string located on top
 of the stack with lines representing the stack trace
