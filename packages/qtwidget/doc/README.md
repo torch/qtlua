@@ -104,20 +104,20 @@ serves as a drawing port descriptor.
 
 There are several ways to specify its arguments:
 
-__ `qtwidget.newimage(w,h,[monoflag])` __
+__`qtwidget.newimage(w,h,[monoflag])`__
 
 Creates an image of width `w` and height `h`.
 When the optional argument `monoflag` is `true`, 
 a bitonal image is created.
 Otherwise the image can contain arbitrary RGBA colors.
 
- __ `qtwidget.newimage(filename,[format])` __
+__`qtwidget.newimage(filename,[format])`__
 
 Creates an image by loading the contents of file `filename`.
 The file format is defined by the optional string argument `format` 
 or derived from the file name extension.
 
-__ `qtwidget.newimage(torchtensor)` __
+__`qtwidget.newimage(torchtensor)`__
 
 Creates an image by extracting the contents of the specified
 [torch.Tensor](..:torch:index#Tensor).
@@ -1565,12 +1565,12 @@ and [current pen](#qtluapainterpen).
 
 There are several ways to specify a color:
 
-__ `painter:setcolor(qcolor)` __
+__`painter:setcolor(qcolor)`__
 
 Argument `qcolor` is a Qt variant of 
 class [qt.QColor](..:qtgui:index#qcolor).
 
-__ `painter:setcolor(string)`  __
+__`painter:setcolor(string)`__
 
 Argument `string` is a string representing a color name.
 All [SVG color names](http://www.w3.org/TR/SVG/types.html#ColorKeywords)
@@ -1579,7 +1579,7 @@ are recognized.Color names can have also the format `"#RGB"`,
 where letters `R`, `G`, or `B` represent hexadecimal 
 digits for each of the color component.
 
-__ `painter:setcolor(r,g,b,[a])` __
+__`painter:setcolor(r,g,b,[a])`__
 
 Arguments `r`, `g`, `b`, and `a` are numbers in range `[0,1]`
 representing the intensities of the red, green, blue, and alpha channels.
