@@ -52,7 +52,7 @@ containing the names of the supported widget classes.
 
 Creates a [widget](..:qtgui:index#qwidget) of class `classname`.
 Argument `classname` can be any of the strings returned
-by [[#qtuiloaderavailablewidgets][`qtuiloader.availableWidgets()`].
+by [`qtuiloader.availableWidgets()`](#qtuiloaderavailablewidgets).
 The optional argument `parent` specifies the parent widget
 and the optional argument `name` specifies the 
 [object name](..:qtcore:index#qobjectobjectname).
