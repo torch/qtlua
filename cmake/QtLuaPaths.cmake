@@ -1,22 +1,15 @@
+# work-around luarocks *ugly* limitations those guys believe that only few
+# directories in their PREFIX should be moved around. i really do not know
+# what the hell they are thinking. you know what? it is sad.
+GET_FILENAME_COMPONENT(CMAKE_INSTALL_PREFIX "${LUA_BINDIR}" PATH)
 SET(QtLua_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
-
-SET(QtLua_INSTALL_BIN_SUBDIR "bin" CACHE PATH
-  "Install dir for binaries (relative to QtLua_INSTALL_PREFIX)")
-
-SET(QtLua_INSTALL_LIB_SUBDIR "lib" CACHE PATH
-  "Install dir for archives (relative to QtLua_INSTALL_PREFIX)")
-
-SET(QtLua_INSTALL_INCLUDE_SUBDIR "include" CACHE PATH
-  "Install dir for include (relative to QtLua_INSTALL_PREFIX)")
-
-SET(QtLua_INSTALL_CMAKE_SUBDIR "share/lua/cmake" CACHE PATH
-  "Install dir for .cmake files (relative to QtLua_INSTALL_PREFIX)")
-
-SET(QtLua_INSTALL_LUA_PATH_SUBDIR "share/lua/5.1" CACHE PATH
-  "Install dir for QtLua packages files (relative to QtLua_INSTALL_PREFIX)")
-
-SET(QtLua_INSTALL_LUA_CPATH_SUBDIR "lib/lua/5.1" CACHE PATH
-  "Install dir for QtLua C packages files (relative to QtLua_INSTALL_PREFIX)")
+FILE(RELATIVE_PATH QtLua_INSTALL_BIN_SUBDIR "${CMAKE_INSTALL_PREFIX}" "${LUA_BINDIR}")
+FILE(RELATIVE_PATH QtLua_INSTALL_LIB_SUBDIR "${CMAKE_INSTALL_PREFIX}" "${LUA_LIBDIR}")
+FILE(RELATIVE_PATH QtLua_INSTALL_INCLUDE_SUBDIR "${CMAKE_INSTALL_PREFIX}" "${LUA_INCDIR}")
+FILE(RELATIVE_PATH QtLua_INSTALL_CMAKE_SUBDIR "${CMAKE_INSTALL_PREFIX}" "${CONFDIR}/cmake")
+FILE(RELATIVE_PATH QtLua_INSTALL_LUA_PATH_SUBDIR "${CMAKE_INSTALL_PREFIX}" "${LUADIR}")
+FILE(RELATIVE_PATH QtLua_INSTALL_LUA_CPATH_SUBDIR "${CMAKE_INSTALL_PREFIX}" "${LIBDIR}")
+####
 
 SET(QtLua_INSTALL_FINDLUA_DIR "${QtLua_BINARY_DIR}/cmake")
 SET(QtLua_INSTALL_BIN "${QtLua_INSTALL_PREFIX}/${QtLua_INSTALL_BIN_SUBDIR}")
