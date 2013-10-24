@@ -8,6 +8,8 @@
 #  LUA_PACKAGE_CPATH - where Lua searches for library packages
 #  LUA_FOUND      - If false, don't attempt to use lua.
 
+INCLUDE(CheckLibraryExists)
+
 SET(LUA_EXECUTABLE "${LUA}")
 
 FIND_LIBRARY(LUA_LIBRARIES
@@ -15,6 +17,10 @@ FIND_LIBRARY(LUA_LIBRARIES
   PATHS ${LUA_LIBDIR}
   ${LUA_BINDIR}
   NO_DEFAULT_PATH)
+
+IF(LUA_LIBRARIES)
+  CHECK_LIBRARY_EXISTS(${LUA_LIBRARIES} luaJIT_setmode "" LUA_JIT)
+ENDIF()
 
 SET(LUA_INCLUDE_DIR "${LUA_INCDIR}")
 
