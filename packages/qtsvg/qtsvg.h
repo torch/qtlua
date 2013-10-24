@@ -3,8 +3,10 @@
 #ifndef QTSVG_H
 #define QTSVG_H
 
+extern "C" {
 #include "lua.h"
 #include "lauxlib.h"
+}
 #include "qtluaengine.h"
 #include "qtluautils.h"
 
@@ -19,6 +21,7 @@
 # define QTSVG_API /**/
 #endif
 
+#define LUA_EXTERNC extern "C"
 
 LUA_EXTERNC QTSVG_API int luaopen_libqtsvg(lua_State *L);
 

@@ -4,8 +4,9 @@
 
 #include "qtluautils.h"
 #include "qtluaengine.h"
+extern "C" {
 #include "lualib.h"
-
+}
 #include <QCoreApplication>
 #include <QDebug>
 #include <QEvent>

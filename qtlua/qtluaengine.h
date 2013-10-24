@@ -14,8 +14,10 @@
 #include <QStringList>
 #include <QVariant>
 
+extern "C" {
 #include "lua.h"
 #include "lauxlib.h"
+}
 #include "qtluaconf.h"
 
 typedef QPointer<QObject> QObjectPointer;

@@ -3,8 +3,10 @@
 #ifndef UILOADER_H
 #define UILOADER_H
 
+extern "C" {
 #include "lua.h"
 #include "lauxlib.h"
+}
 #include "qtluaengine.h"
 #include "qtluautils.h"
 
@@ -18,6 +20,8 @@
 #else
 # define QTUILOADER_API /**/
 #endif
+
+#define LUA_EXTERNC extern "C"
 
 LUA_EXTERNC QTUILOADER_API int luaopen_libqtuiloader(lua_State *L);
 

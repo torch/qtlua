@@ -3,8 +3,10 @@
 #ifndef QTIDE_H
 #define QTIDE_H
 
+extern "C" {
 #include "lua.h"
 #include "lauxlib.h"
+}
 #include "qtluaengine.h"
 #include "qtluautils.h"
 
@@ -18,6 +20,8 @@
 #else
 # define QTIDE_API /**/
 #endif
+
+#define LUA_EXTERNC extern "C"
 
 LUA_EXTERNC QTIDE_API int luaopen_libqtide(lua_State *L);
 

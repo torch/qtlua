@@ -3,8 +3,10 @@
 #ifndef QTLUASVGGENERATOR_H
 #define QTLUASVGGENERATOR_H
 
+extern "C" {
 #include "lua.h"
 #include "lauxlib.h"
+}
 #include "qtluaengine.h"
 #include "qtluautils.h"
 

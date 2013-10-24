@@ -3,8 +3,10 @@
 #ifndef QTLUAUTILS_H
 #define QTLUAUTILS_H
 
+extern "C" {
 #include "lua.h"
 #include "lauxlib.h"
+}
 #include "qtluaconf.h"
 
 #ifdef WIN32

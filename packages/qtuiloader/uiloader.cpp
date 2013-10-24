@@ -2,8 +2,9 @@
 
 
 #include "uiloader.h"
+extern "C" {
 #include "lualib.h"
-
+}
 #include <QAction>
 #include <QActionGroup>
 #include <QApplication>

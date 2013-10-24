@@ -36,8 +36,10 @@
 #include <QTimer>
 #include <QThread>
 
+extern "C" {
 #include "lua.h"
 #include "lauxlib.h"
+}
 #include "qtluaengine.h"
 #include "qtluautils.h"
 

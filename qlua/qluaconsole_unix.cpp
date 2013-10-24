@@ -61,8 +61,10 @@
 #include <QTimer>
 #include <QWaitCondition>
 
+extern "C" {
 #include "lua.h"
 #include "lauxlib.h"
+}
 
 #include "qluaconsole.h"
 #include "qtluaengine.h"
