@@ -1,3 +1,18 @@
+# workaround another annoying cmake bug
+# http://public.kitware.com/Bug/view.php?id=14462
+# https://awesome.naquadah.org/bugs/index.php?do=details&task_id=869
+MACRO(NORMALIZE_PATH _path_)
+  get_filename_component(${_path_}_abs "${${_path_}}" ABSOLUTE)
+  SET(${_path_} "${${_path_}_abs}")
+ENDMACRO()
+
+NORMALIZE_PATH(LUA_BINDIR)
+NORMALIZE_PATH(LUA_LIBDIR)
+NORMALIZE_PATH(LUA_INCDIR)
+NORMALIZE_PATH(LUADIR)
+NORMALIZE_PATH(LIBDIR)
+NORMALIZE_PATH(CONFDIR)
+
 # work-around luarocks *ugly* limitations those guys believe that only few
 # directories in their PREFIX should be moved around. i really do not know
 # what the hell they are thinking. you know what? it is sad.
