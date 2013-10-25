@@ -11,7 +11,7 @@ end
 
 qt.require 'libqtwidget'
 if (package.loaded['torch']) then 
-   require('libqttorch') 
+   pcall(require, 'libqttorch')
 end
 
 
