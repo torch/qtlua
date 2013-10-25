@@ -11,7 +11,7 @@ extern "C" {
 #include "qtluautils.h"
 
 
-#ifdef LUA_BUILD_AS_DLL
+#ifdef _WIN32
 # ifdef libqtsvg_EXPORTS
 #  define QTSVG_API __declspec(dllexport)
 # else

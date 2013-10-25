@@ -11,7 +11,7 @@ extern "C" {
 #include "qtluautils.h"
 
 
-#ifdef LUA_BUILD_AS_DLL
+#ifdef _WIN32
 # ifdef libqtide_EXPORTS
 #  define QTIDE_API __declspec(dllexport)
 # else

@@ -11,7 +11,7 @@ extern "C" {
 #include "qtluautils.h"
 
 
-#ifdef LUA_BUILD_AS_DLL
+#ifdef _WIN32
 # ifdef libqtwidget_EXPORTS
 #  define QTWIDGET_API __declspec(dllexport)
 # else
