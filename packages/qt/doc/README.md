@@ -250,10 +250,13 @@ object.  If the Lua interpreter runs in a different thread, a
 [thread hopping](#qt.qcall) operation is performed for the duration
 of the operation.
 
-Property values are always represented as Qt variant objects.  They
-are automatically converted into Lua strings or Lua numbers when they
-are read. Conversely, Lua strings and Lua numbers are automatically
-converted into the desired type when a property is set.
+Property values are always represented as Qt variant objects.  
+`QByteArray` variants and numerical variants are automatically 
+converted into Lua strings or Lua numbers when they are read. 
+However `QString` variants are left unchanges since such strings
+can contain non ASCII characters. Conversely, Lua strings and 
+Lua numbers are automatically converted into the desired type 
+when a property is set.
 
 Property values with enumerated types registered using the Qt macro
 [Q_ENUMS](http://doc.trolltech.com/4.4/qobject.html) are
@@ -302,10 +305,12 @@ thread owning the Qt object. If the Lua interpreter runs in a
 different thread, a [thread hopping](#qt.qcall) operation is
 performed for the duration of the operation.
 
-Argument types and return values are automatically converted.  Lua
-strings can be specified when a `QByteArray` or a `QString` are
-expected. Lua numbers can be specified whenever numerical types are
-expected.
+A Lua string is automatically converted when a `QByteArray` or a `QString`
+argument is expected. A Lua number is automatically converted whenever a
+numerical type is expected. Return values with numerical types are
+converted into Lua numbers. Return values of type `QByteArray` are
+automatically converted into Lua strings. Return values of type `QString`
+are returned as string variants.
 
 Inheritance ensures that all methods exposed by a class are also
 exposed by its subclasses.  Methods exposed by the `QObject` class,
