@@ -1,0 +1,11 @@
+commands = {}
+modules = {}
+repository = {
+   qtlua = {
+      ['scm-1'] = {
+         {
+            arch = "rockspec"
+         }
+      }
+   }
+}
