@@ -13,7 +13,7 @@ INCLUDE(CheckLibraryExists)
 SET(LUA_EXECUTABLE "${LUA}")
 
 FIND_LIBRARY(LUA_LIBRARIES
-  NAMES lua liblua luajit libluajit lua-5.1 luajit-5.1 liblua-5.1 libluajit-5.1
+  NAMES luajit libluajit luajit-5.1 libluajit-5.1
   PATHS ${LUA_LIBDIR}
   ${LUA_BINDIR}
   NO_DEFAULT_PATH)
