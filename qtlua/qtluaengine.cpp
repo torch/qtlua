@@ -2645,7 +2645,7 @@ luaQ_pushqt(lua_State *L, QObject *obj, bool owned)
       lua_pushlightuserdata(L, (void*)obj);
       lua_rawget(L, -2);
       // ..stack: objecttable object
-      if (lua_isuserdata(L, -1))
+	  if (lua_isuserdata(L, -1) && luaQ_toqobject(L, -1) == obj)
         {
           lua_remove(L, -2);
         }
