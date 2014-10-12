@@ -255,7 +255,7 @@ function newimage(...)
    setmetatable(self, imageClass)
    local firstarg = ...
    if (G.package.loaded['torch'] and G.package.loaded['libqttorch'] and
-       G.torch.typename(firstarg) == "torch.Tensor") then
+       G.torch.type(firstarg):find('torch%..+Tensor')) then
       self.port = qt.QtLuaPainter(qt.QImage.fromTensor(firstarg))
    else
       self.port = qt.QtLuaPainter(...)
