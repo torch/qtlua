@@ -3,7 +3,7 @@
 #ifndef QTUTILCONF_H
 #define QTUTILCONF_H
 
-#ifdef WIN32
+#ifdef _WIN32
 # ifdef libqtutil_EXPORTS
 #  define QTUTILAPI __declspec(dllexport)
 # else
