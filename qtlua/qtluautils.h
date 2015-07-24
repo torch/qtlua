@@ -9,7 +9,7 @@ extern "C" {
 }
 #include "qtluaconf.h"
 
-#ifdef WIN32
+#ifdef _WIN32
 # ifdef libqtlua_EXPORTS
 #  define QTLUAAPI __declspec(dllexport)
 # else
