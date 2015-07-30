@@ -42,6 +42,7 @@ FIND_PACKAGE(Qt4 REQUIRED)
 # Include Lua Files
 FIND_PACKAGE(Lua REQUIRED)
 INCLUDE_DIRECTORIES(${LUA_INCDIR})
+LINK_DIRECTORIES(${LUA_LIBDIR})
 
 ## Hard to check because of issues with RPATH
 ## The compiled program looks for the lua library
