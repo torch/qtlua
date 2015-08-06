@@ -709,8 +709,8 @@ QLuaApplication::Private::acceptInput(bool clear)
   if (L)
     {
       struct lua_State *L = lua;
-      lua_getfield(L, LUA_GLOBALSINDEX, "_PROMPT");
-      lua_getfield(L, LUA_GLOBALSINDEX, "_PROMPT2");
+      lua_getglobal(L, "_PROMPT");
+      lua_getglobal(L, "_PROMPT2");
       luaPrompt = lua_isstring(L,-2) ? lua_tostring(L, -2) : "> ";
       luaPrompt2 = lua_isstring(L,-1) ? lua_tostring(L, -1) : ">> ";
       lua_pop(L, 2);

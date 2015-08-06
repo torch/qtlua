@@ -276,7 +276,7 @@ static struct luaL_Reg t ## _lib[] = {\
 static int t ## _hook(lua_State *L) \
 { \
   lua_getfield(L, -1, "__metatable"); \
-  luaL_register(L, 0, t ## _lib); \
+  luaL_setfuncs(L, t ## _lib, 0); \
   return 0; \
 }
 
@@ -1336,7 +1336,7 @@ static int
 qimage_hook(lua_State *L)
 {
   lua_getfield(L, -1, "__metatable");
-  luaL_register(L, 0, qimage_lib);
+  luaL_setfuncs(L, qimage_lib, 0);
   luaQ_register(L, qimage_guilib, QCoreApplication::instance());
   return 0;
 }
@@ -1937,7 +1937,7 @@ qtransform_map(lua_State *L)
   DO(QRectF,mapRect);
 #undef DO
   else
-    luaL_typerror(L, 2, "point, polygon, region, or path");
+    luaQ_typerror(L, 2, "point, polygon, region, or path");
   return 1;
 }
 

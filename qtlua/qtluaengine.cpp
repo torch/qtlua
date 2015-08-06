@@ -127,7 +127,7 @@ luaQ_setup(lua_State *L, QtLuaEngine::Private *d)
   lua_createtable(L, 0, 0);
   lua_rawset(L, LUA_REGISTRYINDEX);
   // package.preload["qt"]
-  lua_getfield(L, LUA_GLOBALSINDEX, "package");
+  lua_getglobal(L, "package");
   if (lua_istable(L, -1)) 
     {
       lua_getfield(L, -1, "preload");
@@ -1462,7 +1462,7 @@ call_in_arg_thread(lua_State *L)
   // object
   QObject *obj = luaQ_toqobject(L, 1);
   if (! obj) 
-    luaL_typerror(L, 1, "qobject");
+    luaQ_typerror(L, 1, "qobject");
   // function
   lua_pushvalue(L, lua_upvalueindex(1));
   Q_ASSERT(lua_isfunction(L, -1));
@@ -1871,7 +1871,7 @@ luaQ_m__getsetproperty(lua_State *L)
   const QMetaProperty &mp = info->metaProperty;
   QObject *obj = luaQ_toqobject(L, 1, info->metaObject);
   if (! obj)
-    luaL_typerror(L, 0, info->metaObject->className());
+    luaQ_typerror(L, 0, info->metaObject->className());
   if (! mp.isScriptable(obj))
     luaL_error(L, "property " LUA_QS " is not scriptable", mp.name());
   if (lua_gettop(L) == 1)
@@ -2333,7 +2333,7 @@ luaQ_buildmetaclass(lua_State *L, int type)
   else
     {
       // Standard methods
-      luaL_register(L, 0, qtval_lib);
+      luaL_setfuncs(L, qtval_lib, 0);
     }
   // Insert class into qt package
   lua_pushlightuserdata(L, (void*)qtKey);
@@ -2385,7 +2385,7 @@ luaQ_buildmetaclass(lua_State *L, const QMetaObject *mo)
   else
     {
       // Standard methods
-      luaL_register(L, 0, qtval_lib);
+      luaL_setfuncs(L, qtval_lib, 0);
     }
   // Slots and invokable method
   QMap<QByteArray,QtLuaMethodInfo> overloads;
@@ -2470,7 +2470,7 @@ void
 luaQ_fillmetatable(lua_State *L, int type, const QMetaObject *mo)
 {
   // Fill common entries
-  luaL_register(L, 0, qtmeta_lib);
+  luaL_setfuncs(L, qtmeta_lib, 0);
   // Fill distinct entries
   if (mo)
     {
@@ -3117,7 +3117,7 @@ luaQ_disconnect(lua_State *L, QObject *obj, const char *sig, int findex)
             lua_pushlightuserdata(L, (void*)r);
             lua_rawget(L, -3);
             // ..stack: sigfunc function sigtable
-            bool eq = lua_equal(L, -1, -2);
+            bool eq = lua_rawequal(L, -1, -2);
             lua_pop(L, 1);
             if (! eq)
               continue;
