@@ -1,0 +1,15 @@
+site_name: qtlua
+theme : simplex
+repo_url : https://github.com/torch/qtlua
+use_directory_urls : false
+markdown_extensions: [extra]
+docs_dir : doc
+pages:
+- [index.md, Home]
+- [qt.md, Global Qt System]
+- [qtcore.md, Core Interface]
+- [qtgui.md, Graphical User Interface]
+- [qtuiloader.md, Qt Designer UI Files Loader]
+- [qtide.md, Integrated Development Environment]
+- [qtsvg.md, SVG Support]
+- [qtwidget.md, Widgets and Events]
