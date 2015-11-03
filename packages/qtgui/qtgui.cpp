@@ -1247,6 +1247,7 @@ qimage_save(lua_State *L)
 {
   QImage s = luaQ_checkqvariant<QImage>(L, 1);
   QString fn = luaQ_optqvariant<QString>(L, 2);
+  QByteArray fname;
   const char *format = 0;
   QFile f;
   if (fn.isEmpty() && lua_isuserdata(L, 2))
@@ -1260,7 +1261,7 @@ qimage_save(lua_State *L)
   else
     {
       f.setFileName(fn);
-      QByteArray fname = fn.toLocal8Bit();
+      fname = fn.toLocal8Bit();
       if (! f.open(QIODevice::WriteOnly))
         luaL_error(L,"cannot open '%s'for writing (%s)", fname.constData(),
                    f.errorString().toLocal8Bit().constData() );
