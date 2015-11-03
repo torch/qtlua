@@ -547,7 +547,7 @@ static int
 qurl_tolocalfile(lua_State *L)
 {
   QUrl url = luaQ_checkqvariant<QUrl>(L, 1);
-#if QT_VERSION >= 0x040700
+#if QT_VERSION >= 0x040800
   if (!url.isLocalFile())
     lua_pushnil(L);
   else
