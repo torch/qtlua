@@ -145,7 +145,7 @@ luaQ_checkqobject(lua_State *L, int index, T* = 0)
 {
   T *obj = qobject_cast<T*>(luaQ_toqobject(L, index));
   if (! obj) 
-    luaL_typerror(L, index, T::staticMetaObject.className());
+    luaQ_typerror(L, index, T::staticMetaObject.className());
   return obj;
 }
 
@@ -155,7 +155,7 @@ luaQ_checkqvariant(lua_State *L, int index, T* = 0)
   int type = qMetaTypeId<T>();
   QVariant v = luaQ_toqvariant(L, index, type);
   if (v.userType() != type)
-    luaL_typerror(L, index, QMetaType::typeName(type));
+    luaQ_typerror(L, index, QMetaType::typeName(type));
   return qVariantValue<T>(v);
 }
 

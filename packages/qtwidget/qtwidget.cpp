@@ -172,7 +172,7 @@ luaQE_checkqvariant(lua_State *L, int index, T* = 0)
       lua_pop(L, 1);
     }
   if (v.userType() != type)
-    luaL_typerror(L, index, QMetaType::typeName(type));
+    luaQ_typerror(L, index, QMetaType::typeName(type));
   return qVariantValue<T>(v);
 }
 
@@ -569,7 +569,7 @@ static int qtluapainter_image(lua_State *L)
     sw = o->width();
     sh = o->height();
   } else
-    luaL_typerror(L, k, "QPixmap or QImage");
+    luaQ_typerror(L, k, "QPixmap or QImage");
   k += 1;
   if (lua_isnumber(L, k)) {
     sx = luaL_checknumber(L, k++);
@@ -672,7 +672,7 @@ struct luaL_Reg qtluapainter_guilib[] = {
 static int qtluapainter_hook(lua_State *L) 
 {
   lua_getfield(L, -1, "__metatable");
-  luaL_register(L, 0, qtluapainter_lib);
+  luaL_setfuncs(L, qtluapainter_lib, 0);
   // luaQ_register(L, qtluapainter_lib, QCoreApplication::instance());
   luaQ_register(L, qtluapainter_guilib, QCoreApplication::instance());
   return 0;

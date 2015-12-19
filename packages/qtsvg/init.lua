@@ -5,13 +5,13 @@ qt.require 'libqtsvg'
 local qt = qt
 local type = type
 
-module 'qtsvg'
+qtsvg = qtsvg or {}
 
-function loadsvg(filename)
+function qtsvg.loadsvg(filename)
    return qt.QSvgRenderer(filename)
 end
 
-function paintsvg(port,svg,...)
+function qtsvg.paintsvg(port,svg,...)
    if type(port) == "table" then
       port = port.port
    end
@@ -29,3 +29,4 @@ function paintsvg(port,svg,...)
    port:gend(true)
 end
 
+return qtsvg

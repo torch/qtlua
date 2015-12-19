@@ -10,11 +10,12 @@ qt.require 'libqtuiloader'
 
 local qt = qt
 
-module('qtuiloader')
+qtuiloader = qtuiloader or {}
+local M = qtuiloader
 
 local theloader = nil
 
-function loader()
+function M.loader()
    if (not theloader or not theloader:tobool()) then
       theloader = qt.QUiLoader()
    end
@@ -27,8 +28,10 @@ local loaderFunctions = {
 
 for i = 1,#loaderFunctions do
    local f = loaderFunctions[i]
-   _M[f] = function(...) 
-              local uiloader = loader()
+   M[f] = function(...)
+              local uiloader = M.loader()
               return uiloader[f](uiloader,...)
            end
 end
+
+return M

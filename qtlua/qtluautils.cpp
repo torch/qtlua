@@ -89,7 +89,7 @@ int
 luaQ_tracebackskip(struct lua_State *L, int skip)
 {
   // stack: msg
-  luaQ_getfield(L, LUA_GLOBALSINDEX, "debug");
+  lua_getglobal(L, "debug");
   luaQ_getfield(L, -1, "traceback");
   // stack: traceback debug msg
   lua_remove(L, -2);
@@ -155,7 +155,7 @@ luaQ_complete(struct lua_State *L)
   int k = 0;
   int loop = 0;
   const char *stem = luaL_checkstring(L, 1);
-  lua_pushvalue(L, LUA_GLOBALSINDEX);
+  lua_pushglobaltable(L);
   for(;;)
     {
       const char *s = stem;
@@ -438,7 +438,7 @@ qt_disconnect(lua_State *L)
       if (lua_isnoneornil(L, 3))
         findex = 0;
       else if (! lua_isfunction(L, 3))
-        luaL_typerror(L, 3, "function");
+        luaQ_typerror(L, 3, "function");
       ok = luaQ_disconnect(L, obj, sig, findex);
     }
   lua_pushboolean(L, ok);
@@ -554,7 +554,7 @@ static const char *pushfilename (lua_State *L, const char *name)
 {
   const char *path;
   const char *filename;
-  luaQ_getfield(L, LUA_GLOBALSINDEX, "package");
+  lua_getglobal(L, "package");
   luaQ_getfield(L, -1, "cpath");
   lua_remove(L, -2);
   if (! (path = lua_tostring(L, -1)))
@@ -689,8 +689,8 @@ luaopen_qt(lua_State *L)
   const char *qt = luaL_optstring(L, 1, "qt");
   luaQ_pushqt(L);
   lua_pushvalue(L, -1);
-  lua_setfield(L, LUA_GLOBALSINDEX, qt);
-  luaL_register(L, qt, qt_lib);
+  lua_setglobal(L, qt);
+  luaL_setfuncs(L, qt_lib, 0);
 
   // Add qt_m_index in a metatable
   lua_createtable(L, 0, 1);

@@ -142,7 +142,7 @@ local type = type
 local pcall = pcall
 local setmetatable = setmetatable
 
-module('qtwidget')
+qtwidget = qtwidget or {}
 
 local painterFunctions = {
    -- c functions
@@ -177,7 +177,8 @@ end
 
 -- windows
 
-windowClass = {}
+local windowClass = {}
+qtwidget.windowClass = windowClass
 windowClass.__index = windowClass
 declareRelayFunctions(windowClass)
 
@@ -209,7 +210,7 @@ function windowClass:close()
    pcall(function() self.widget:deleteLater() end)
 end
 
-function newwindow(w,h,title)
+function qtwidget.newwindow(w,h,title)
    local self = {}
    setmetatable(self, windowClass)
    self.widget = qt.QWidget()
@@ -242,7 +243,8 @@ end
 
 -- images
 
-imageClass = {}
+local imageClass = {}
+qtwidget.imageClass = imageClass
 imageClass.__index = imageClass
 declareRelayFunctions(imageClass)
 
@@ -250,7 +252,7 @@ function imageClass:valid()
    return true;
 end
 
-function newimage(...)
+function qtwidget.newimage(...)
    local self = {}
    setmetatable(self, imageClass)
    local firstarg = ...
@@ -268,7 +270,8 @@ end
 
 -- printer
 
-printerClass = {}
+local printerClass = {}
+qtwidget.printerClass = printerClass
 printerClass.__index = printerClass
 declareRelayFunctions(printerClass)
 
@@ -276,7 +279,7 @@ function printerClass:valid()
    return true;
 end
 
-function newprint(w,h,printername)
+function qtwidget.newprint(w,h,printername)
    local self = {}
    setmetatable(self, printerClass)
    self.printer = qt.QtLuaPrinter()
@@ -292,7 +295,7 @@ function newprint(w,h,printername)
    end
 end
 
-function newpdf(w,h,filename)
+function qtwidget.newpdf(w,h,filename)
    local self = {}
    setmetatable(self, printerClass)
    self.printer = qt.QtLuaPrinter()
@@ -307,7 +310,7 @@ function newpdf(w,h,filename)
    return self
 end
 
-function newps(w,h,filename)
+function qtwidget.newps(w,h,filename)
    local self = {}
    setmetatable(self, printerClass)
    self.printer = qt.QtLuaPrinter()
@@ -321,7 +324,7 @@ function newps(w,h,filename)
    return self
 end
 
-function newsvg(w,h,filename)
+function qtwidget.newsvg(w,h,filename)
    local self = {}
    setmetatable(self, printerClass)
    self.svg = qt.QtLuaSvgGenerator(filename)
@@ -333,3 +336,4 @@ function newsvg(w,h,filename)
    return self
 end
 
+return qtwidget

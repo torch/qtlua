@@ -16,8 +16,8 @@ local tonumber = tonumber
 local tostring = tostring
 local type = type
 
-module('qtide.prefs')
-
+qtide.prefs = qtide.prefs or {}
+local M = qtide.prefs
 
 local uiPreferences = paths.thisfile("prefs.ui")
 
@@ -42,7 +42,7 @@ local function readSettingsBoolean(a,k)
    return nil
 end
 
-function createPreferencesDialog()
+function M.createPreferencesDialog()
    if not paths.filep(uiPreferences) then
       error("Unable to locate file 'prefs.ui'")
    end
@@ -155,7 +155,7 @@ function createPreferencesDialog()
 end
 
 
-function savePreferences(d)
+function M.savePreferences(d)
    local a = qt.qApp
    local f,w,h,ts,te,cl,hs
    local ide = qt.QLuaIde()
@@ -226,4 +226,4 @@ function savePreferences(d)
    
 end
 
-
+return M

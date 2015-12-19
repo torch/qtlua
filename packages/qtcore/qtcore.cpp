@@ -148,7 +148,7 @@ static struct luaL_Reg t ## _lib[] = {\
 static int t ## _hook(lua_State *L) \
 { \
   lua_getfield(L, -1, "__metatable"); \
-  luaL_register(L, 0, t ## _lib); \
+  luaL_setfuncs(L, t ## _lib, 0); \
   return 0; \
 }
 
@@ -220,7 +220,7 @@ static int
 qbytearray_hook(lua_State *L)
 {
   lua_getfield(L, -1, "__metatable");
-  luaL_register(L, 0, qbytearray_lib);
+  luaL_setfuncs(L, qbytearray_lib, 0);
   return 0;
 }
 
@@ -440,7 +440,7 @@ static int
 qstring_hook(lua_State *L)
 {
   lua_getfield(L, -1, "__metatable");
-  luaL_register(L, 0, qstring_lib);
+  luaL_setfuncs(L, qstring_lib, 0);
   return 0;
 }
 
@@ -498,7 +498,7 @@ static int
 qstringlist_hook(lua_State *L)
 {
   lua_getfield(L, -1, "__metatable");
-  luaL_register(L, 0, qstringlist_lib);
+  luaL_setfuncs(L, qstringlist_lib, 0);
   return 0;
 }
 
@@ -578,7 +578,7 @@ static int
 qurl_hook(lua_State *L)
 {
   lua_getfield(L, -1, "__metatable");
-  luaL_register(L, 0, qurl_lib);
+  luaL_setfuncs(L, qurl_lib, 0);
   return 0;
 }
 
@@ -632,7 +632,7 @@ static int
 qvariantlist_hook(lua_State *L)
 {
   lua_getfield(L, -1, "__metatable");
-  luaL_register(L, 0, qvariantlist_lib);
+  luaL_setfuncs(L, qvariantlist_lib, 0);
   return 0;
 }
 
@@ -690,7 +690,7 @@ static int
 qvariantmap_hook(lua_State *L)
 {
   lua_getfield(L, -1, "__metatable");
-  luaL_register(L, 0, qvariantmap_lib);
+  luaL_setfuncs(L, qvariantmap_lib, 0);
   return 0;
 }
 

@@ -476,7 +476,7 @@ rtty_complete(const char *text, int start, int end)
       QtLuaLocker lua(console->lua, 250);
       struct lua_State *L = lua;
       if (lua) {
-        lua_getfield(L, LUA_GLOBALSINDEX, "help");
+        lua_getglobal(L, "help");
         if (lua_gettop(L)) {
           printf("\n");
           lua_pushstring(L, keyword);

@@ -23,7 +23,7 @@ local type = type
 local paths = paths
 local pcall = pcall
 
-module('qtide')
+qtide = qtide or {}
 
 -- Startup --
 
@@ -35,7 +35,7 @@ local function realmode(mode)
    return mode or qt.qApp:readSettings("ide/mode") or defaultmode
 end
 
-function setup(mode)
+function qtide.setup(mode)
    mode = realmode(mode)
    if mode == "mdi" then     -- subwindows within a big window
       local mdi = qluaide:createMdiMain()
@@ -69,7 +69,7 @@ function setup(mode)
    qt.qApp:writeSettings("ide/mode", mode)
 end
 
-function start(mode)
+function qtide.start(mode)
    setup(mode)
    if not qt.qLuaSdiMain then
       qluaide:createSdiMain()
@@ -81,7 +81,7 @@ end
 
 -- Editor --
 
-function editor(s)
+function qtide.editor(s)
    local e = qluaide:editor(s or "")
    if e == nil and type(s) == "string" then
       error(string.format("Unable to read file '%s'", s))
@@ -90,7 +90,7 @@ function editor(s)
 end
 
 
-function doeditor(e)
+function qtide.doeditor(e)
    -- validate parameter
    if not qt.isa(e, 'QLuaEditor*') then 
       error(string.format("QLuaEditor expected, got %s.", s)); 
@@ -124,7 +124,7 @@ end
 
 -- Inspector --
 
-function inspector(...)
+function qtide.inspector(...)
    error("Function qtide.inspector is not yet working")
 end
 
@@ -134,7 +134,7 @@ end
 
 -- Browser --
 
-function browser(url)
+function qtide.browser(url)
    return qluaide:browser(url or "about:/")
 end
 
@@ -159,7 +159,7 @@ end
 helpbrowser = nil
 helpurl = locate_help_files()
 
-function help()
+function qtide.help()
    local appname = qt.qApp.applicationName:tostring()
    if not helpurl then
       error("The html help files are not installed.")
@@ -187,7 +187,7 @@ qt.connect(qluaide,'helpRequested(QWidget*)',
 -- Preferences --
 
 
-function preferences()
+function qtide.preferences()
    G.require 'qtide.prefs'
    local d = prefs.createPreferencesDialog()
    if d and d.dialog:exec() > 0 then
@@ -204,6 +204,4 @@ qt.connect(qluaide,'prefsRequested(QWidget*)',
               end
            end)
 
-
-
-
+return qtide
