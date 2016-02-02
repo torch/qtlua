@@ -177,7 +177,7 @@ end
 qt.disconnect(qluaide, 'helpRequested(QWidget*)')
 qt.connect(qluaide,'helpRequested(QWidget*)', 
            function(main) 
-              local success, message = pcall(help)
+              local success, message = pcall(qtide.help)
               if not success and type(message) == "string" then
                  qluaide:messageBox("QLua Warning", message)
               end
@@ -198,7 +198,7 @@ end
 qt.disconnect(qluaide,'prefsRequested(QWidget*)')
 qt.connect(qluaide,'prefsRequested(QWidget*)',
            function(main) 
-              local success, message = pcall(preferences)
+              local success, message = pcall(qtide.preferences)
               if not success and type(message) == "string" then
                  qluaide:messageBox("QLua Warning", message)
               end
