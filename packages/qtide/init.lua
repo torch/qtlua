@@ -70,7 +70,7 @@ function qtide.setup(mode)
 end
 
 function qtide.start(mode)
-   setup(mode)
+   qtide.setup(mode)
    if not qt.qLuaSdiMain then
       qluaide:createSdiMain()
       qluaide.editOnError = true
