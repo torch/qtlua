@@ -466,11 +466,19 @@ QLuaConsole::Private::redirect(bool flag)
       int fd1 = sThread.fds[1];
       int fd2 = fd1;
       if (! trueStdout) 
+#ifndef _MSC_VER
         stdout->_file = 1;
+#else
+        freopen("CON", "w", stdout);
+#endif
       else if (! flag)
         fd1 = _fileno(trueStdout);
       if (! trueStderr) 
+#ifndef _MSC_VER
         stderr->_file = 2;
+#else
+        freopen("CON", "w", stderr);
+#endif
       else if (! flag)
         fd2 = _fileno(trueStderr);
       _dup2(fd1, _fileno(stdout));
