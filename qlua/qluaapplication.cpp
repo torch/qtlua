@@ -904,7 +904,7 @@ QLuaApplication::QLuaApplication(int &argc, char **argv,
   d->programName = d->programNameData.constData();
   QRegExp re("^(mac(?=qlua)|win(?=qlua)|)(q?)(.*)", Qt::CaseInsensitive);
   cuteName = capitalize(cuteName);
-  if (re.indexIn(cuteName) >= 0 && re.numCaptures() == 3)
+  if (re.indexIn(cuteName) >= 0 && re.captureCount() == 3)
     cuteName = capitalize(re.cap(2)) + capitalize(re.cap(3));
 
   // basic setup
@@ -1112,7 +1112,9 @@ QLuaApplication::filesToOpen()
 bool 
 QLuaApplication::runsWithoutGraphics() const
 {
-  return (QApplication::type() == QApplication::Tty);
+  //return (QApplication::type() == QApplication::Tty);
+  //return (QApplicationPrivate::type() == QApplicationPrivate::Tty);
+  return !qobject_cast<QApplication *>(qApp);
 }
 
 

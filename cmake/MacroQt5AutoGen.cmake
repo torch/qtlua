@@ -1,6 +1,6 @@
 # -*- cmake -*-
 #
-# MACRO_QT4_AUTOGEN(<var> <..infiles..>)
+# MACRO_QT5_AUTOGEN(<var> <..infiles..>)
 # examines the files <...infiles...> and produces rules
 # to generate C++ files that should be compiled.
 # The names of the generated files is added into variable <var>.
@@ -23,20 +23,20 @@
 
 INCLUDE(MacroAddFileDependencies)
 
-MACRO(MACRO_QT4_AUTOGEN outfiles)
+MACRO(MACRO_QT5_AUTOGEN outfiles)
   FOREACH (it ${ARGN})
     GET_FILENAME_COMPONENT(ext "${it}" EXT)
     IF ("${ext}" MATCHES "^\\.(ui)$")
-        QT4_WRAP_UI(${outfiles} "${it}")
+        QT5_WRAP_UI(${outfiles} "${it}")
     ELSEIF ("${ext}" MATCHES "^\\.(qrc)$")
-        QT4_ADD_RESOURCES(${outfiles} "${it}")
+        QT5_ADD_RESOURCES(${outfiles} "${it}")
     ELSEIF ("${ext}" MATCHES "^\\.(h)$")
         GET_FILENAME_COMPONENT(abs "${it}" ABSOLUTE)
         IF (EXISTS "${abs}")
           FILE(READ "${abs}" _contents)
           STRING(REGEX MATCH "Q_OBJECT" _match "${_contents}")
           IF (_match)
-            QT4_WRAP_CPP(${outfiles} "${it}")
+            QT5_WRAP_CPP(${outfiles} "${it}")
           ENDIF (_match)
         ENDIF(EXISTS "${abs}")
     ELSEIF ("${ext}" MATCHES "^\\.(cpp|cxx)$") 
@@ -46,10 +46,10 @@ MACRO(MACRO_QT4_AUTOGEN outfiles)
           FILE(READ "${abs}" _contents)
           STRING(REGEX MATCH "Q_OBJECT" _match "${_contents}")
           IF (_match)
-            QT4_GENERATE_MOC("${abs}" "${CMAKE_CURRENT_BINARY_DIR}/${nam}.moc")
+            QT5_GENERATE_MOC("${abs}" "${CMAKE_CURRENT_BINARY_DIR}/${nam}.moc")
 	    MACRO_ADD_FILE_DEPENDENCIES("${it}" "${CMAKE_CURRENT_BINARY_DIR}/${nam}.moc")
           ENDIF (_match)
         ENDIF(EXISTS "${abs}")
     ENDIF ("${ext}" MATCHES "^\\.(ui)$") 
   ENDFOREACH(it)
-ENDMACRO(MACRO_QT4_AUTOGEN outfiles)
+ENDMACRO(MACRO_QT5_AUTOGEN outfiles)

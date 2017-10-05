@@ -1548,8 +1548,7 @@ qvariant_has_object_type(const QVariant *vp)
 {
   int type = vp->userType();
   return (type == qMetaTypeId<QObjectPointer>() ||
-          type == QMetaType::QObjectStar ||
-          type == QMetaType::QWidgetStar );
+          type == QMetaType::QObjectStar);
 }
 
 
@@ -1982,7 +1981,7 @@ construct_arg(QVariant &var, void *vtype)
   if (type == qMetaTypeId<QVariant>())
     return static_cast<void*>(new QVariant(var));
   else if (type && (var.userType() == type || var.convert(QVariant::Type(type))))
-    return QMetaType::construct(type, var.constData());
+    return QMetaType::create(type, var.constData());
   else if (mo && (obj = qvariant_to_object(&var)))
     return static_cast<void*>(new QObject*(obj));
   return 0;
@@ -2017,7 +2016,7 @@ construct_retval(void *vtype)
   else if (type == qMetaTypeId<QVariant>())
     return static_cast<void*>(new QVariant());
   else if (type)
-    return QMetaType::construct(type);
+    return QMetaType::create(type);
   return 0;
 }
 
@@ -2248,7 +2247,7 @@ luaQ_m__index(lua_State *L)
         luaQ_pushqt(L, o);
         return 1;
       }
-  QObject *o = qFindChild<QObject*>(obj, QString::fromLocal8Bit(key));
+  QObject *o = obj->findChild<QObject*>(QString::fromLocal8Bit(key));
   if (o)
     {
       luaQ_pushqt(L, o);
@@ -2394,7 +2393,7 @@ luaQ_buildmetaclass(lua_State *L, const QMetaObject *mo)
   for  (int i=fm; i<lm; i++)
     {
       QMetaMethod method = mo->method(i);
-      QByteArray sig = method.signature();
+      QByteArray sig = method.methodSignature();
       if (method.access() != QMetaMethod::Private)
         {
           QtLuaMethodInfo::Detail d;
@@ -3053,7 +3052,7 @@ luaQ_connect(lua_State *L, QObject *obj,
   lua_pushcfunction(L, luaQ_p_create_receiver);
   luaQ_call(L, 0, 1, d->q);
   QVariant *vp = luaQ_toqvariantp(L, -1);
-  void *v = (vp) ? qVariantValue<void*>(luaQ_toqvariant(L, -1)) : 0;
+  void *v = (vp) ? luaQ_toqvariant(L, -1).value<void*>() : 0;
   QtLuaEngine::Receiver *r = static_cast<QtLuaEngine::Receiver*>(v);
   lua_pop(L, 1);
   if (! r)

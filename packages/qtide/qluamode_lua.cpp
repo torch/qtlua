@@ -236,7 +236,7 @@ QLuaModeLua::gotLine(UserData *d, int pos, int len, QString s)
   int slen = s.size();
   while (p < len)
     {
-      int c = (p < slen) ? s[p].toAscii() : '\n';
+      int c = (p < slen) ? s[p].toLatin1() : '\n';
       switch(state)
         {
         case 0:
@@ -597,7 +597,7 @@ comp_lex(QString s, int len, int state, int n, int &q)
         {
         default:
         case -1: // misc
-          if (isalpha(s[p].toAscii()) || s[p]=='_') {
+          if (isalpha(s[p].toLatin1()) || s[p]=='_') {
             q = p; state = -2; 
           } else if (s[p]=='\'') {
             q = p+1; z = s[p]; n = 0; state = -3; 
@@ -625,7 +625,7 @@ comp_lex(QString s, int len, int state, int n, int &q)
           }
           break;
         case -2: // identifier
-          if (!isalnum(s[p].toAscii()) && s[p]!='_' && s[p]!='.' && s[p]!=':') {
+          if (!isalnum(s[p].toLatin1()) && s[p]!='_' && s[p]!='.' && s[p]!=':') {
             state = -1; continue;
           }
           break;

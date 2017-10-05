@@ -635,7 +635,7 @@ QLuaTextEdit::Private::filterText(QString data)
   for (int i=0; i<data.size(); i++)
     {
       QChar c = data.at(i);
-      int ic = c.toAscii();
+      int ic = c.toLatin1();
       if (ic == '\t')
         {
           int tpos = (int)((pos + tabSize) / tabSize) * tabSize;
@@ -1199,7 +1199,7 @@ QLuaTextEdit::indentAt(int pos, QTextBlock block)
       int ss = text.size();
       int e = pos-block.position();
       for (int i=0; i<e && i<ss; i++)
-        if (text[i].toAscii() == '\t') 
+        if (text[i].toLatin1() == '\t') 
           c = ((int)(c / ts) + 1) * ts;
         else
           c = c + 1;
@@ -1246,7 +1246,7 @@ QLuaTextEdit::getBlockIndent(QTextBlock block, int &indent)
   int i;
   indent = 0;
   for (i=0; i<ss && text[i].isSpace(); i++)
-    indent += (text[i].toAscii() == '\t') ? ts : 1;
+    indent += (text[i].toLatin1() == '\t') ? ts : 1;
   if (i >= ss)
     indent = -1;
   return block.position() + i;

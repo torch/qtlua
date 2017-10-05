@@ -1,6 +1,6 @@
 # -*- cmake -*-
 
-INCLUDE_DIRECTORIES("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
+INCLUDE_DIRECTORIES("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}" "${Qt5PrintSupport_INCLUDE_DIRS}")
 
 # we need qt>=4.4 for this section
 IF (QT4_FOUND AND WITH_QTLUA_IDE)
@@ -26,7 +26,7 @@ IF (WITH_QTLUA_IDE)
     SET(QT_USE_QTNETWORK 1)
     ADD_DEFINITIONS("-DHAVE_QTWEBKIT=1")
   ENDIF (QT_QTWEBKIT_FOUND)
-  INCLUDE(${QT_USE_FILE})		     
+  #INCLUDE(${QT_USE_FILE})		     
   # find qlua
   FIND_PACKAGE(QLua REQUIRED)
   INCLUDE_DIRECTORIES(${QLUA_INCLUDE_DIR})
@@ -48,9 +48,9 @@ IF (WITH_QTLUA_IDE)
     qluamode_lua.cpp 
     qluamode_c.cpp )
   
-  MACRO_QT4_AUTOGEN(qtide_GEN ${qtide_SRC})
+  MACRO_QT5_AUTOGEN(qtide_GEN ${qtide_SRC})
   MACRO_ADD_QTLUA_MODULE(libqtide ${qtide_SRC} ${qtide_GEN})
-  TARGET_LINK_LIBRARIES(libqtide ${QLUA_LIBRARIES})
+  TARGET_LINK_LIBRARIES(libqtide ${QLUA_LIBRARIES} ${Qt5PrintSupport_LIBRARIES})
   
   MACRO_INSTALL_QTLUA_FILES(qtide init.lua prefs.lua prefs.ui)
 #  ADD_TORCH_DOK(dok qtide "QT Interface" "QT IDE for Lua" 6.)

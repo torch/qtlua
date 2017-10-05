@@ -24,7 +24,7 @@ static Option pageSizes[] = {
   {0} };
 
 static Option outputFormats[] = {
-  F(NativeFormat), F(PdfFormat), F(PostScriptFormat), 
+  F(NativeFormat), F(PdfFormat),
   {0} };
 
 static Option printerStates[] = {
@@ -60,7 +60,7 @@ QtLuaPrinter::pageSize() const
 #else
   int s = (int)QPrinter::pageSize();
 #endif
-  return QString::fromAscii(value_to_name(s, pageSizes));
+  return QString::fromLatin1(value_to_name(s, pageSizes));
 }
 
 
@@ -105,7 +105,7 @@ QString
 QtLuaPrinter::outputFormat() const
 {
   int s = (int) QPrinter::outputFormat();
-  return QString::fromAscii(value_to_name(s, outputFormats));
+  return QString::fromLatin1(value_to_name(s, outputFormats));
 }
 
 
@@ -122,7 +122,7 @@ QString
 QtLuaPrinter::printerState() const
 {
   int s = (int) QPrinter::printerState();
-  return QString::fromAscii(value_to_name(s, printerStates));
+  return QString::fromLatin1(value_to_name(s, printerStates));
 }
 
 

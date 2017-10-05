@@ -542,7 +542,7 @@ rtty_prep()
   rl_readline_name = progname.data();
   rl_getc_function = rtty_getchar;
   rl_attempted_completion_function = rtty_complete;
-  rl_completer_quote_characters = "\"'";
+  rl_completer_quote_characters = (char *)"\"'";
 #if RL_READLINE_VERSION < 0x0600
   rl_completion_append_character = '\0';
 #endif
@@ -659,24 +659,28 @@ rtty_readline(const char *prompt)
 
 
 static void 
-message_handler(QtMsgType type, const char *msg)
+message_handler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
   FILE *ferr = stderr;
   if (console)
     ferr = console->trueStderr;
+  QByteArray localMsg = msg.toLocal8Bit();
   switch (type) 
     {
+    case QtInfoMsg:
+      fprintf(ferr, "# Info: %s\n", localMsg.constData());
+      break;
     case QtDebugMsg:
-      fprintf(ferr, "# Debug: %s\n", msg);
+      fprintf(ferr, "# Debug: %s\n", localMsg.constData());
       break;
     case QtWarningMsg:
-      fprintf(ferr, "# Warning: %s\n", msg);
+      fprintf(ferr, "# Warning: %s\n", localMsg.constData());
       break;
     case QtCriticalMsg:
-      fprintf(ferr, "# Critical: %s\n", msg);
+      fprintf(ferr, "# Critical: %s\n", localMsg.constData());
       break;
     case QtFatalMsg:
-      fprintf(ferr, "# Fatal: %s\n", msg);
+      fprintf(ferr, "# Fatal: %s\n", localMsg.constData());
       abort();
     }
 }
@@ -1048,7 +1052,7 @@ QLuaConsole::Private::readline()
 QLuaConsole::QLuaConsole(QObject *parent)
   : QObject(parent), d(new Private(this))
 {
-  qInstallMsgHandler(message_handler);
+  qInstallMessageHandler(message_handler);
   d->start();
 }
 

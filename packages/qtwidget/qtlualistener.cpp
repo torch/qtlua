@@ -22,7 +22,7 @@ f_enumerator(const char *s)
   };
   const QMetaObject *mo = QFakeObject::qt();
   int index = mo->indexOfEnumerator(s);
-  if (mo >= 0)
+  if (index >= 0)
     return mo->enumerator(index);
   return QMetaEnum();
 }

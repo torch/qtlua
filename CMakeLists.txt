@@ -4,7 +4,7 @@ project(QtLua)
 
 IF(APPLE)
   CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12 FATAL_ERROR)
-  CMAKE_POLICY(VERSION 2.8.12)
+  #CMAKE_POLICY(VERSION 2.8.12)
   SET(CMAKE_MACOSX_RPATH TRUE) # @rpath in libs
 ELSE()
   CMAKE_MINIMUM_REQUIRED(VERSION 2.8 FATAL_ERROR)
@@ -27,15 +27,16 @@ SET(WITH_QTLUA_IDE ON
 
 # --- Macros
 
-INCLUDE(MacroQt4AutoGen)
+INCLUDE(MacroQt5AutoGen)
 INCLUDE(MacroAddQtLuaModule)
 INCLUDE(CheckCXXSourceCompiles)
 INCLUDE(CheckCXXSourceRuns)
 
-# --- Qt4
+# --- Qt5
+add_definitions(-std=c++11)
 
-SET(QT_MIN_VERSION "4.3.0")
-FIND_PACKAGE(Qt4 REQUIRED)
+SET(QT_MIN_VERSION "5.0.0")
+FIND_PACKAGE(Qt5 COMPONENTS Core PrintSupport Svg UiTools Widgets REQUIRED)
 
 # --- Lua
 

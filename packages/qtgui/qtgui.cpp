@@ -30,6 +30,7 @@
 #include <QImage>
 #include <QImageReader>
 #include <QImageWriter>
+#include <QInternal>
 #include <QMainWindow>
 #include <QMenu>
 #include <QMenuBar>
@@ -39,6 +40,7 @@
 #include <QObject>
 #include <QPainter>
 #include <QPen>
+#include <QPrinter>
 #include <QStatusBar>
 #include <QString>
 #include <QTransform>
@@ -483,7 +485,7 @@ qbrush_totable(lua_State *L)
       v = QVariant(s.textureImage());
       luaQ_pushqt(L, v);
       lua_setfield(L, -2, "texture");
-      if (qVariantValue<QImage>(v).depth() > 1) 
+      if (v.value<QImage>().depth() > 1) 
         break;
     default:
       v = QVariant(s.color());
@@ -523,8 +525,7 @@ qbrush_fromtable(lua_State *L)
       const int t_color = QMetaType::QColor;
       const int t_transform = QMetaType::QTransform;
       if (f_optvar(L, 1, "gradient", t_gradient))
-        s = QBrush(qVariantValue<QGradient>
-                   (luaQ_toqvariant(L, -1, t_gradient)));
+        s = QBrush(luaQ_toqvariant(L, -1, t_gradient).value<QGradient>());
       lua_pop(L, 1);
       if (f_optvar(L, 1, "texture", t_image))
         {
@@ -535,7 +536,7 @@ qbrush_fromtable(lua_State *L)
           lua_insert(L, -2);
           luaQ_call(L, 1, 1, 0);
           const int t_brush = QMetaType::QBrush;
-          s = qVariantValue<QBrush>(luaQ_toqvariant(L, -1, t_brush));
+          s = luaQ_toqvariant(L, -1, t_brush).value<QBrush>();
         }
       lua_pop(L, 1);
       if (f_optflag(L, 1, "style", m_style))
@@ -544,12 +545,11 @@ qbrush_fromtable(lua_State *L)
       if (f_optvar(L, 1, "color", t_color)) {
         if (s.style() == Qt::NoBrush) 
           s.setStyle(Qt::SolidPattern);
-        s.setColor(qVariantValue<QColor>(luaQ_toqvariant(L, -1, t_color)));
+        s.setColor(luaQ_toqvariant(L, -1, t_color).value<QColor>());
       }
       lua_pop(L, 1);
       if (f_optvar(L, 1, "transform", t_transform))
-        s.setTransform(qVariantValue<QTransform>
-                       (luaQ_toqvariant(L, -1, t_transform)));
+        s.setTransform(luaQ_toqvariant(L, -1, t_transform).value<QTransform>());
     lua_pop(L, 1);
     }
   luaQ_pushqt(L, QVariant(s));
@@ -639,9 +639,9 @@ lua_checkpixmap(lua_State *L, int index)
 {
   QVariant v = luaQ_toqvariant(L, index);
   if (v.userType() == qMetaTypeId<QImage>())
-    return QPixmap::fromImage(qVariantValue<QImage>(v));
+    return QPixmap::fromImage(v.value<QImage>());
   if (v.userType() == qMetaTypeId<QPixmap>())
-    return qVariantValue<QPixmap>(v);
+    return v.value<QPixmap>();
   luaL_error(L, "illegal argument");
   return QPixmap();
 }
@@ -1146,9 +1146,9 @@ qicon_new(lua_State *L)
   QVariant v = luaQ_toqvariant(L, 1);
   QVariant s = luaQ_toqvariant(L, 1, QMetaType::QString);
   if (v.userType() == QMetaType::QPixmap)
-    icon = QIcon(qVariantValue<QPixmap>(v));
+    icon = QIcon(v.value<QPixmap>());
   else if (v.userType() == QMetaType::QImage)
-    icon = QIcon(QPixmap::fromImage(qVariantValue<QImage>(v)));
+    icon = QIcon(QPixmap::fromImage(v.value<QImage>()));
   else if (s.userType() == QMetaType::QString)
     icon = QIcon(s.toString());
   else if (! lua_isnoneornil(L, 1))
@@ -1744,9 +1744,9 @@ qpen_fromtable(lua_State *L)
         s.setJoinStyle(Qt::PenJoinStyle(lua_tointeger(L, -1)));
       lua_pop(L, 1);
       if (f_optvar(L, 1, "color", t_color))
-        s.setColor(qVariantValue<QColor>(luaQ_toqvariant(L, -1, t_color)));
+        s.setColor(luaQ_toqvariant(L, -1, t_color).value<QColor>());
       if (f_optvar(L, 1, "brush", t_brush))
-        s.setBrush(qVariantValue<QBrush>(luaQ_toqvariant(L, -1, t_brush)));
+        s.setBrush(luaQ_toqvariant(L, -1, t_brush).value<QBrush>());
       if (f_opttype(L, 1, "width", LUA_TNUMBER))
         s.setWidthF(lua_tonumber(L, -1));
       lua_pop(L, 1);
@@ -1925,7 +1925,7 @@ qtransform_map(lua_State *L)
         return 2; 
     } 
 #define DO(T,M) else if (type == qMetaTypeId<T>()) \
-      luaQ_pushqt(L, qVariantFromValue<T>(c.M(qVariantValue<T>(v))))
+      luaQ_pushqt(L, qVariantFromValue<T>(c.M(v.value<T>())))
   DO(QPoint,map);
   DO(QPointF,map);
   DO(QLine,map);
@@ -2093,9 +2093,9 @@ qwidget_render(lua_State *L)
     {
       QVariant v = luaQ_toqvariant(L, 2);
       if (v.userType() == qMetaTypeId<QPainter*>())
-        painter = qVariantValue<QPainter*>(v);
+        painter = v.value<QPainter*>();
       else if (v.userType() == qMetaTypeId<QPaintDevice*>())
-        device = qVariantValue<QPaintDevice*>(v);
+        device = v.value<QPaintDevice*>();
       else
         luaL_error(L, "Expecting QPainter* or QPaintDevice*");
     }
@@ -2139,7 +2139,7 @@ name_2_attribute(lua_State *L, const char *name,
     { "WA_UpdatesDisabled", Qt::WA_UpdatesDisabled },
     { "WA_Mapped", Qt::WA_Mapped },
     { "WA_MacNoClickThrough", Qt::WA_MacNoClickThrough },
-    { "WA_PaintOutsidePaintEvent", Qt::WA_PaintOutsidePaintEvent },
+    //{ "WA_PaintOutsidePaintEvent", Qt::WA_PaintOutsidePaintEvent },
     { "WA_InputMethodEnabled", Qt::WA_InputMethodEnabled },
     { "WA_WState_Visible", Qt::WA_WState_Visible },
     { "WA_WState_Hidden", Qt::WA_WState_Hidden },
@@ -2270,10 +2270,10 @@ name_2_window_flag(lua_State *L, const char *name,
     {"WindowContextHelpButtonHint", Qt::WindowContextHelpButtonHint, 0},
     {"WindowShadeButtonHint", Qt::WindowShadeButtonHint, 0},
     {"WindowStaysOnTopHint", Qt::WindowStaysOnTopHint, 0},
-#if QT_VERSION >= 0x40400
-    {"WindowOkButtonHint", Qt::WindowOkButtonHint, 0},
-    {"WindowCancelButtonHint", Qt::WindowCancelButtonHint, 0},
-#endif
+//#if QT_VERSION >= 0x40400
+//    {"WindowOkButtonHint", Qt::WindowOkButtonHint, 0},
+//    {"WindowCancelButtonHint", Qt::WindowCancelButtonHint, 0},
+//#endif
     {"CustomizeWindowHint", Qt::CustomizeWindowHint, 0},
     {0,0,0}
   };
@@ -2391,7 +2391,7 @@ luaopen_libqtgui(lua_State *L)
   // load module 'qt'
   if (luaL_dostring(L, "require 'qt'"))
     lua_error(L);
-  if (QApplication::type() == QApplication::Tty)
+  if (!qobject_cast<QApplication *>qApp)
     luaL_error(L, "Graphics have been disabled (running with -nographics)");
 
   // register metatypes

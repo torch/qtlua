@@ -205,7 +205,7 @@ QLuaEditor::Private::updateMode(QLuaTextEditModeFactory *f)
 {
   if  (modeGroup)
     foreach(QAction *action, modeGroup->actions())
-      action->setChecked(qVariantValue<void*>(action->data()) == (void*)f);
+      action->setChecked(action->data().value<void *>() == (void*)f);
 }
 
 
@@ -214,7 +214,7 @@ QLuaEditor::Private::doMode(QAction *action)
 {
   if (action)
     {
-      void *data = qVariantValue<void*>(action->data());
+      void *data = action->data().value<void *>();
       QLuaTextEditModeFactory *f = (data) ? (QLuaTextEditModeFactory*)data : 0;
       q->doMode(f);
     }
