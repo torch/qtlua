@@ -67,7 +67,7 @@ Not yet implemented
 
 Starts the QLua Integrated Development Environment (IDE)
 and ensure that the main window is visible.
-This function is called implicitely when program `qlua`
+This function is called implicitly when program `qlua`
 is executed with option `-ide`.
 
 The optional argument `style` is a string 
@@ -98,7 +98,7 @@ a graphic console.
 <a name="qluaide"></a>
 ### qt.QLuaIde ###
 
-Object `qt.qLuaIde` represetns the global state of the IDE.
+Object `qt.qLuaIde` represents the global state of the IDE.
 This is the unique instance of class `qt.QLuaIde`
 which inherits [qt.QObject](qt.md#qobject).
 Most of its capabilities are conveniently
