@@ -70,7 +70,7 @@ luaopen_libqtide(lua_State *L)
   // load module 'qt'
   if (luaL_dostring(L, "require 'qt'"))
     lua_error(L);
-  if (QApplication::type() == QApplication::Tty)
+  if (!qobject_cast<QApplication *>(qApp))
     luaL_error(L, "Graphics have been disabled (running with -nographics)");
   // register metatypes
   qRegisterMetaType<QPrinter*>("QPrinter*");

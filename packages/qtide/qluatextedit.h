@@ -11,6 +11,7 @@
 #include <QList>
 #include <QObject>
 #include <QPlainTextEdit>
+#include <QPrinter>
 #include <QSize>
 #include <QString>
 #include <QSyntaxHighlighter>

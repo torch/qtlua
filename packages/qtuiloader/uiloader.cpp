@@ -28,7 +28,7 @@ extern "C" {
 static int 
 qtuiloader_new(lua_State *L)
 {
-  if (QApplication::type() == QApplication::Tty)
+  if (!qobject_cast<QApplication *>(qApp))
     luaL_error(L, "Graphics have been disabled (running with -nographics)");
   QObject *parent = luaQ_optqobject<QObject>(L, 1, 0);
   QUiLoader *q = new QUiLoader(parent);

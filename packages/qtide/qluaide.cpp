@@ -425,7 +425,7 @@ QLuaIde::Private::updateWindowMenu()
       foreach(QAction *action, menu->actions())
         if (action->isCheckable())
           {
-            QObject *object = qVariantValue<QObject*>(action->data());
+            QObject *object = action->data().value<QObject *>();
             if (object && windows.contains(object))
               {
                 QWidget *window = qobject_cast<QWidget*>(object);
@@ -498,7 +498,7 @@ QLuaIde::Private::doWindowMenuItem()
   QAction *a = qobject_cast<QAction*>(sender());
   if (a)
     {
-      QObject *o = qVariantValue<QObject*>(a->data());
+      QObject *o = a->data().value<QObject *>();
       if (o && windows.contains(o))
         {
           QWidget *w = qobject_cast<QWidget*>(o);

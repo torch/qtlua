@@ -105,7 +105,7 @@ QLuaModeText::parseBlock(int pos, const QTextBlock &block,
   // matches
   for (int i=0; i<len; i++)
     {
-      char ic = text[i].toAscii();
+      char ic = text[i].toLatin1();
       if (ic=='(' || ic=='[' || ic=='{')
         {
           PMatch m(new Match);

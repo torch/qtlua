@@ -14,6 +14,7 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QObject>
+#include <QPrinter>
 #include <QWidget>
 
 

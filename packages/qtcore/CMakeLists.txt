@@ -1,6 +1,6 @@
 # -*- cmake -*-
 
-INCLUDE(${QT_USE_FILE})		     
+#INCLUDE(${QT_USE_FILE})		     
 INCLUDE_DIRECTORIES("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
 
 SET(qtcore_SRC qtcore.h qtcore.cpp)
