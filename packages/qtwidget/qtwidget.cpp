@@ -38,8 +38,8 @@
 static QMetaEnum 
 f_enumerator(const char *s, const QMetaObject *mo)
 {
-  int index = mo->indexOfEnumerator(s);
-  if (mo >= 0)
+  int index = (mo) ? mo->indexOfEnumerator(s) : -1;
+  if (index >= 0)
     return mo->enumerator(index);
   return QMetaEnum();
 }
