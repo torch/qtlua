@@ -345,7 +345,7 @@ for selecting an existing file.
   * Argument `opt` are the [file dialog options](http://doc.trolltech.com/4.4/qfiledialog.html#Option-enum).
 
 The function returns a `qt.QString` containing the selected file name
-and a `qt.QString` contaning the selected filter.
+and a `qt.QString` containing the selected filter.
 
 <a name="qfiledialog.getOpenFileNames"></a>
 ### qt.QFileDialog.getOpenFileNames([p,[c,[d,[f,[s,[opt]]]]]]) ###
